@@ -1,0 +1,14 @@
+{
+  "name": "jiosaavn",
+  "private": true,
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "dev:docs": "npm run dev -w apps/docs",
+    "build:sdk": "npm run build -w packages/sdk",
+    "test:sdk": "npm run test -w packages/sdk",
+    "typecheck:sdk": "npm run typecheck -w packages/sdk"
+  }
+}
