@@ -5,6 +5,12 @@
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
   "imports": {
     "#common/*": "./src/common/*",
     "#modules/*": "./src/modules/*"

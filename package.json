@@ -11,8 +11,7 @@
     "test:sdk": "npm run test -w packages/sdk",
     "typecheck:sdk": "npm run typecheck -w packages/sdk",
     "format": "prettier --write .",
-    "format:check": "prettier --check .",
-    "prepare": "lefthook install"
+    "format:check": "prettier --check ."
   },
   "devDependencies": {
     "@commitlint/cli": "^20.4.2",
