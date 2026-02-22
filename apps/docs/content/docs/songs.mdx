@@ -1,0 +1,287 @@
+---
+title: Songs
+description: Fetch songs by ID or link, get download URLs, and discover song suggestions.
+---
+
+import { TypeTable } from 'fumadocs-ui/components/type-table';
+
+## SongService
+
+```ts
+import { SongService } from 'jiosaavn-sdk'
+
+const songService = new SongService()
+```
+
+---
+
+### getSongByIds
+
+Fetch one or more songs by their IDs.
+
+```ts
+const songs = await songService.getSongByIds({ songIds: '3IoDK8qI' })
+```
+
+#### Parameters
+
+<TypeTable
+  type={{
+    songIds: {
+      description: 'Comma-separated list of song IDs',
+      type: 'string',
+      required: true,
+    },
+  }}
+/>
+
+**Returns:** `Promise<SongModel[]>`
+
+**Throws:** `SaavnError(404)` if no songs are found.
+
+---
+
+### getSongByLink
+
+Fetch songs by a JioSaavn link token.
+
+```ts
+const songs = await songService.getSongByLink('OgwhbhtDRwM')
+```
+
+#### Parameters
+
+<TypeTable
+  type={{
+    token: {
+      description: 'The token extracted from a JioSaavn song URL',
+      type: 'string',
+      required: true,
+    },
+  }}
+/>
+
+**Returns:** `Promise<SongModel[]>`
+
+**Throws:** `SaavnError(404)` if no songs are found.
+
+---
+
+### getSongSuggestions
+
+Get song suggestions based on a given song.
+
+```ts
+const suggestions = await songService.getSongSuggestions({
+  songId: 'yDeAS8Eh',
+  limit: 10
+})
+```
+
+#### Parameters
+
+<TypeTable
+  type={{
+    songId: {
+      description: 'The song ID to base suggestions on',
+      type: 'string',
+      required: true,
+    },
+    limit: {
+      description: 'Max number of suggestions to return',
+      type: 'number',
+      required: true,
+    },
+  }}
+/>
+
+**Returns:** `Promise<SongModel[]>`
+
+**Throws:** `SaavnError(404)` if no suggestions are found.
+
+---
+
+### createSongStation
+
+Create a radio station from a song ID.
+
+```ts
+const stationId = await songService.createSongStation('3IoDK8qI')
+```
+
+#### Parameters
+
+<TypeTable
+  type={{
+    songIds: {
+      description: 'Song ID to create the station from',
+      type: 'string',
+      required: true,
+    },
+  }}
+/>
+
+**Returns:** `Promise<string>` — The station ID.
+
+**Throws:** `SaavnError(500)` if the station could not be created.
+
+---
+
+## SongModel
+
+<TypeTable
+  type={{
+    id: {
+      description: 'Unique song identifier',
+      type: 'string',
+      required: true,
+    },
+    name: {
+      description: 'Song title',
+      type: 'string',
+      required: true,
+    },
+    type: {
+      description: 'Content type',
+      type: 'string',
+      required: true,
+    },
+    year: {
+      description: 'Release year',
+      type: 'string | null',
+      required: true,
+    },
+    releaseDate: {
+      description: 'Full release date',
+      type: 'string | null',
+      required: true,
+    },
+    duration: {
+      description: 'Duration in seconds',
+      type: 'number | null',
+      required: true,
+    },
+    label: {
+      description: 'Music label name',
+      type: 'string | null',
+      required: true,
+    },
+    explicitContent: {
+      description: 'Whether the song has explicit content',
+      type: 'boolean',
+      required: true,
+    },
+    playCount: {
+      description: 'Total play count',
+      type: 'number | null',
+      required: true,
+    },
+    language: {
+      description: 'Song language',
+      type: 'string',
+      required: true,
+    },
+    hasLyrics: {
+      description: 'Whether lyrics are available',
+      type: 'boolean',
+      required: true,
+    },
+    lyricsId: {
+      description: 'ID for fetching lyrics',
+      type: 'string | null',
+      required: true,
+    },
+    url: {
+      description: 'JioSaavn permalink',
+      type: 'string',
+      required: true,
+    },
+    copyright: {
+      description: 'Copyright text',
+      type: 'string | null',
+      required: true,
+    },
+    album: {
+      description: 'Album info — see Album (nested) below',
+      type: '{ id: string | null, name: string | null, url: string | null }',
+      required: true,
+    },
+    artists: {
+      description: 'Song artists — see ArtistMapModel',
+      type: '{ primary: ArtistMapModel[], featured: ArtistMapModel[], all: ArtistMapModel[] }',
+      required: true,
+    },
+    image: {
+      description: 'Image URLs at various qualities',
+      type: 'DownloadLink[]',
+      required: true,
+    },
+    downloadUrl: {
+      description: 'Audio download URLs at various bitrates',
+      type: 'DownloadLink[]',
+      required: true,
+    },
+  }}
+/>
+
+---
+
+## DownloadLink
+
+Shared type used for both image and audio download URLs.
+
+<TypeTable
+  type={{
+    quality: {
+      description: 'Quality label (e.g. "50x50", "150x150", "320kbps")',
+      type: 'string',
+      required: true,
+    },
+    url: {
+      description: 'Direct URL to the resource',
+      type: 'string',
+      required: true,
+    },
+  }}
+/>
+
+---
+
+## ArtistMapModel
+
+Lightweight artist reference used within songs and albums.
+
+<TypeTable
+  type={{
+    id: {
+      description: 'Artist ID',
+      type: 'string',
+      required: true,
+    },
+    name: {
+      description: 'Artist name',
+      type: 'string',
+      required: true,
+    },
+    role: {
+      description: 'Artist role (e.g. "singer", "lyricist")',
+      type: 'string',
+      required: true,
+    },
+    type: {
+      description: 'Content type',
+      type: 'string',
+      required: true,
+    },
+    image: {
+      description: 'Artist image URLs',
+      type: 'DownloadLink[]',
+      required: true,
+    },
+    url: {
+      description: 'JioSaavn permalink',
+      type: 'string',
+      required: true,
+    },
+  }}
+/>

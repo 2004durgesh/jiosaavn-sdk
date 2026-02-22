@@ -1,0 +1,73 @@
+---
+title: Getting Started
+description: Install, configure, and make your first API call with the JioSaavn SDK.
+---
+
+## Installation
+
+```bash tab="npm"
+npm install jiosaavn-sdk
+```
+
+```bash tab="yarn"
+yarn add jiosaavn-sdk
+```
+
+```bash tab="pnpm"
+pnpm add jiosaavn-sdk
+```
+
+## Quick Start
+
+Import the service you need and start making calls. No API keys or configuration required.
+
+```ts
+import { SongService } from 'jiosaavn-sdk'
+
+const songService = new SongService()
+
+// Fetch a song by ID
+const songs = await songService.getSongByIds({ songIds: '3IoDK8qI' })
+console.log(songs)
+```
+
+## Usage Pattern
+
+Each domain (songs, albums, artists, playlists, search) has its own **Service** class. Instantiate it and call methods:
+
+```ts
+import {
+  SongService,
+  AlbumService,
+  ArtistService,
+  PlaylistService,
+  SearchService
+} from 'jiosaavn-sdk'
+
+const songs = new SongService()
+const albums = new AlbumService()
+const artists = new ArtistService()
+const playlists = new PlaylistService()
+const search = new SearchService()
+```
+
+## Error Handling
+
+All services throw a `SaavnError` when something goes wrong (e.g., resource not found). You can catch and inspect it:
+
+```ts
+import { SongService, SaavnError } from 'jiosaavn-sdk'
+
+const songService = new SongService()
+
+try {
+  const songs = await songService.getSongByIds({ songIds: 'invalid-id' })
+} catch (error) {
+  if (error instanceof SaavnError) {
+    console.log(error.statusCode) // 404
+    console.log(error.message)    // 'song not found'
+  }
+}
+```
+
+See [Error Handling](/docs/error-handling) for more details.

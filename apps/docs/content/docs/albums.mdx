@@ -1,0 +1,140 @@
+---
+title: Albums
+description: Retrieve album details including track listings and metadata.
+---
+
+import { TypeTable } from 'fumadocs-ui/components/type-table';
+
+## AlbumService
+
+```ts
+import { AlbumService } from 'jiosaavn-sdk'
+
+const albumService = new AlbumService()
+```
+
+---
+
+### getAlbumById
+
+Fetch an album by its ID.
+
+```ts
+const album = await albumService.getAlbumById('23241654')
+```
+
+#### Parameters
+
+<TypeTable
+  type={{
+    albumId: {
+      description: 'The unique album ID',
+      type: 'string',
+      required: true,
+    },
+  }}
+/>
+
+**Returns:** `Promise<AlbumModel>`
+
+**Throws:** `SaavnError(404)` if the album is not found.
+
+---
+
+### getAlbumByLink
+
+Fetch an album by a JioSaavn link token.
+
+```ts
+const album = await albumService.getAlbumByLink('ITIyo-GDr7A_')
+```
+
+#### Parameters
+
+<TypeTable
+  type={{
+    albumLink: {
+      description: 'The token extracted from a JioSaavn album URL',
+      type: 'string',
+      required: true,
+    },
+  }}
+/>
+
+**Returns:** `Promise<AlbumModel>`
+
+**Throws:** `SaavnError(404)` if the album is not found.
+
+---
+
+## AlbumModel
+
+<TypeTable
+  type={{
+    id: {
+      description: 'Unique album identifier',
+      type: 'string',
+      required: true,
+    },
+    name: {
+      description: 'Album title',
+      type: 'string',
+      required: true,
+    },
+    description: {
+      description: 'Album description or subtitle',
+      type: 'string',
+      required: true,
+    },
+    year: {
+      description: 'Release year',
+      type: 'number | null',
+      required: true,
+    },
+    type: {
+      description: 'Content type',
+      type: 'string',
+      required: true,
+    },
+    playCount: {
+      description: 'Total play count',
+      type: 'number | null',
+      required: true,
+    },
+    language: {
+      description: 'Album language',
+      type: 'string',
+      required: true,
+    },
+    explicitContent: {
+      description: 'Whether the album has explicit content',
+      type: 'boolean',
+      required: true,
+    },
+    artists: {
+      description: 'Album artists grouped by role',
+      type: '{ primary: ArtistMapModel[], featured: ArtistMapModel[], all: ArtistMapModel[] }',
+      required: true,
+    },
+    songCount: {
+      description: 'Number of songs in the album',
+      type: 'number | null',
+      required: true,
+    },
+    url: {
+      description: 'JioSaavn permalink',
+      type: 'string',
+      required: true,
+    },
+    image: {
+      description: 'Album cover image URLs at various qualities',
+      type: 'DownloadLink[]',
+      required: true,
+    },
+    songs: {
+      description: 'Array of songs in the album',
+      type: 'SongModel[] | null',
+      required: true,
+    },
+  }}
+/>

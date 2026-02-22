@@ -1,0 +1,14 @@
+{
+  "title": "Documentation",
+  "pages": [
+    "index",
+    "getting-started",
+    "error-handling",
+    "---API Reference---",
+    "songs",
+    "albums",
+    "artists",
+    "playlists",
+    "search"
+  ]
+}

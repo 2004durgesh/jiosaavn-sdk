@@ -1,0 +1,423 @@
+---
+title: Search
+description: Full-text search across songs, albums, artists, and playlists on JioSaavn.
+---
+
+import { TypeTable } from 'fumadocs-ui/components/type-table';
+
+## SearchService
+
+```ts
+import { SearchService } from 'jiosaavn-sdk'
+
+const searchService = new SearchService()
+```
+
+---
+
+### searchAll
+
+Search across all content types at once.
+
+```ts
+const results = await searchService.searchAll('Dua Lipa')
+```
+
+#### Parameters
+
+<TypeTable
+  type={{
+    query: {
+      description: 'The search query',
+      type: 'string',
+      required: true,
+    },
+  }}
+/>
+
+**Returns:** `Promise<SearchModel>`
+
+**Throws:** `SaavnError(404)` if no results are found.
+
+---
+
+### searchSongs
+
+Search specifically for songs.
+
+```ts
+const results = await searchService.searchSongs({
+  query: 'Levitating',
+  page: 0,
+  limit: 10
+})
+```
+
+#### Parameters
+
+<TypeTable
+  type={{
+    query: {
+      description: 'The search query',
+      type: 'string',
+      required: true,
+    },
+    page: {
+      description: 'Page number',
+      type: 'number',
+      required: true,
+    },
+    limit: {
+      description: 'Max results per page',
+      type: 'number',
+      required: true,
+    },
+  }}
+/>
+
+#### Return Type — SearchSongModel
+
+<TypeTable
+  type={{
+    total: {
+      description: 'Total number of matches',
+      type: 'number',
+      required: true,
+    },
+    start: {
+      description: 'Pagination offset',
+      type: 'number',
+      required: true,
+    },
+    results: {
+      description: 'Array of song objects',
+      type: 'SongModel[]',
+      required: true,
+    },
+  }}
+/>
+
+---
+
+### searchAlbums
+
+Search specifically for albums.
+
+```ts
+const results = await searchService.searchAlbums({
+  query: 'Future Nostalgia',
+  page: 0,
+  limit: 10
+})
+```
+
+#### Parameters
+
+Same as [`searchSongs`](#searchsongs).
+
+#### Return Type — SearchAlbumModel
+
+<TypeTable
+  type={{
+    total: {
+      description: 'Total number of matches',
+      type: 'number',
+      required: true,
+    },
+    start: {
+      description: 'Pagination offset',
+      type: 'number',
+      required: true,
+    },
+    results: {
+      description: 'Array of search album result objects',
+      type: 'SearchAlbumResult[]',
+      required: true,
+    },
+  }}
+/>
+
+##### SearchAlbumResult
+
+<TypeTable
+  type={{
+    id: {
+      description: 'Album ID',
+      type: 'string',
+      required: true,
+    },
+    name: {
+      description: 'Album name',
+      type: 'string',
+      required: true,
+    },
+    description: {
+      description: 'Album description',
+      type: 'string',
+      required: true,
+    },
+    year: {
+      description: 'Release year',
+      type: 'number | null',
+      required: true,
+    },
+    type: {
+      description: 'Content type',
+      type: 'string',
+      required: true,
+    },
+    playCount: {
+      description: 'Total play count',
+      type: 'number | null',
+      required: true,
+    },
+    language: {
+      description: 'Album language',
+      type: 'string',
+      required: true,
+    },
+    explicitContent: {
+      description: 'Whether the album has explicit content',
+      type: 'boolean',
+      required: true,
+    },
+    artists: {
+      description: 'Album artists',
+      type: '{ primary: ArtistMapModel[], featured: ArtistMapModel[], all: ArtistMapModel[] }',
+      required: true,
+    },
+    url: {
+      description: 'JioSaavn permalink',
+      type: 'string',
+      required: true,
+    },
+    image: {
+      description: 'Cover image URLs',
+      type: 'DownloadLink[]',
+      required: true,
+    },
+  }}
+/>
+
+---
+
+### searchArtists
+
+Search specifically for artists.
+
+```ts
+const results = await searchService.searchArtists({
+  query: 'Arijit Singh',
+  page: 0,
+  limit: 10
+})
+```
+
+#### Parameters
+
+Same as [`searchSongs`](#searchsongs).
+
+#### Return Type — SearchArtistModel
+
+<TypeTable
+  type={{
+    total: {
+      description: 'Total number of matches',
+      type: 'number',
+      required: true,
+    },
+    start: {
+      description: 'Pagination offset',
+      type: 'number',
+      required: true,
+    },
+    results: {
+      description: 'Array of artist results',
+      type: 'SearchArtistResult[]',
+      required: true,
+    },
+  }}
+/>
+
+##### SearchArtistResult
+
+<TypeTable
+  type={{
+    id: {
+      description: 'Artist ID',
+      type: 'string',
+      required: true,
+    },
+    name: {
+      description: 'Artist name',
+      type: 'string',
+      required: true,
+    },
+    role: {
+      description: 'Artist role',
+      type: 'string',
+      required: true,
+    },
+    type: {
+      description: 'Content type',
+      type: 'string',
+      required: true,
+    },
+    image: {
+      description: 'Image URLs at various qualities',
+      type: 'DownloadLink[]',
+      required: true,
+    },
+    url: {
+      description: 'JioSaavn permalink',
+      type: 'string',
+      required: true,
+    },
+  }}
+/>
+
+**Throws:** `SaavnError(404)` if no artists are found.
+
+---
+
+### searchPlaylists
+
+Search specifically for playlists.
+
+```ts
+const results = await searchService.searchPlaylists({
+  query: 'Bollywood Hits',
+  page: 0,
+  limit: 10
+})
+```
+
+#### Parameters
+
+Same as [`searchSongs`](#searchsongs).
+
+#### Return Type — SearchPlaylistModel
+
+<TypeTable
+  type={{
+    total: {
+      description: 'Total number of matches',
+      type: 'number',
+      required: true,
+    },
+    start: {
+      description: 'Pagination offset',
+      type: 'number',
+      required: true,
+    },
+    results: {
+      description: 'Array of playlist results',
+      type: 'SearchPlaylistResult[]',
+      required: true,
+    },
+  }}
+/>
+
+##### SearchPlaylistResult
+
+<TypeTable
+  type={{
+    id: {
+      description: 'Playlist ID',
+      type: 'string',
+      required: true,
+    },
+    name: {
+      description: 'Playlist name',
+      type: 'string',
+      required: true,
+    },
+    type: {
+      description: 'Content type',
+      type: 'string',
+      required: true,
+    },
+    image: {
+      description: 'Cover image URLs',
+      type: 'DownloadLink[]',
+      required: true,
+    },
+    url: {
+      description: 'JioSaavn permalink',
+      type: 'string',
+      required: true,
+    },
+    songCount: {
+      description: 'Number of songs',
+      type: 'number | null',
+      required: true,
+    },
+    language: {
+      description: 'Playlist language',
+      type: 'string',
+      required: true,
+    },
+    explicitContent: {
+      description: 'Whether playlist has explicit content',
+      type: 'boolean',
+      required: true,
+    },
+  }}
+/>
+
+**Throws:** `SaavnError(404)` if no playlists are found.
+
+---
+
+## SearchModel
+
+Returned by `searchAll`. Contains categorized results, each with a `results` array and `position` ranking.
+
+<TypeTable
+  type={{
+    topQuery: {
+      description: 'Top matching results across all types',
+      type: 'SearchResponseModel<SearchTopQueryItem[]>',
+      required: true,
+    },
+    songs: {
+      description: 'Matching songs',
+      type: 'SearchResponseModel<SearchSongItem[]>',
+      required: true,
+    },
+    albums: {
+      description: 'Matching albums',
+      type: 'SearchResponseModel<SearchAlbumItem[]>',
+      required: true,
+    },
+    artists: {
+      description: 'Matching artists',
+      type: 'SearchResponseModel<SearchArtistItem[]>',
+      required: true,
+    },
+    playlists: {
+      description: 'Matching playlists',
+      type: 'SearchResponseModel<SearchPlaylistItem[]>',
+      required: true,
+    },
+  }}
+/>
+
+### SearchResponseModel&lt;T&gt;
+
+Wrapper type for each category in `SearchModel`.
+
+<TypeTable
+  type={{
+    results: {
+      description: 'Array of results',
+      type: 'T',
+      required: true,
+    },
+    position: {
+      description: 'Position/ranking of this category',
+      type: 'number',
+      required: true,
+    },
+  }}
+/>

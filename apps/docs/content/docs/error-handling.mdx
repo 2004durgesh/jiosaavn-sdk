@@ -1,0 +1,66 @@
+---
+title: Error Handling
+description: How the SDK handles errors and how to catch them in your application.
+---
+
+import { TypeTable } from 'fumadocs-ui/components/type-table';
+
+## SaavnError
+
+All services throw a `SaavnError` when an operation fails. This is a standard `Error` subclass with an additional `statusCode` property.
+
+```ts
+import { SaavnError } from 'jiosaavn-sdk'
+```
+
+### Properties
+
+<TypeTable
+  type={{
+    message: {
+      description: 'Human-readable error description',
+      type: 'string',
+      required: true,
+    },
+    statusCode: {
+      description: 'HTTP-style status code (e.g. 404, 500)',
+      type: 'number',
+      required: true,
+    },
+    name: {
+      description: 'Always "SaavnError"',
+      type: 'string',
+      default: '"SaavnError"',
+      required: true,
+    },
+  }}
+/>
+
+### Common Error Codes
+
+| Code | Meaning | Example |
+|------|---------|---------|
+| `404` | Resource not found | Song ID doesn't exist |
+| `500` | Internal error | Failed to create song station |
+
+### Catching Errors
+
+```ts
+import { SongService, SaavnError } from 'jiosaavn-sdk'
+
+const songService = new SongService()
+
+try {
+  await songService.getSongByIds({ songIds: 'nonexistent' })
+} catch (error) {
+  if (error instanceof SaavnError) {
+    switch (error.statusCode) {
+      case 404:
+        console.log('Song not found:', error.message)
+        break
+      default:
+        console.log('Unexpected error:', error.message)
+    }
+  }
+}
+```

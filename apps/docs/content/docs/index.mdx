@@ -1,13 +1,33 @@
 ---
-title: Hello World
-description: Your first document
+title: Introduction
+description: An overview of the JioSaavn SDK — a universal TypeScript SDK for the JioSaavn API.
 ---
 
-Welcome to the docs! You can start writing documents in `/content/docs`.
+The **JioSaavn SDK** is a universal, isomorphic TypeScript SDK that lets you interact with the JioSaavn music platform. Search for songs, albums, artists, and playlists, fetch detailed metadata, and generate download links — all from a clean, type-safe API.
 
-## What is Next?
+## Features
+
+- **Type-safe** — Full TypeScript support with Zod-validated models
+- **Isomorphic** — Works in Node.js, Deno, Bun, and browser environments
+- **Zero config** — No API keys or authentication required
+- **Modular** — Use only the services you need
+
+## Available Services
 
 <Cards>
-  <Card title="Learn more about Next.js" href="https://nextjs.org/docs" />
-  <Card title="Learn more about Fumadocs" href="https://fumadocs.dev" />
+  <Card title="Songs" href="/docs/songs">
+    Fetch songs by ID or link, get download URLs, and discover suggestions.
+  </Card>
+  <Card title="Albums" href="/docs/albums">
+    Get album details including track listings and artist info.
+  </Card>
+  <Card title="Artists" href="/docs/artists">
+    Look up artist profiles with top songs, albums, and similar artists.
+  </Card>
+  <Card title="Playlists" href="/docs/playlists">
+    Retrieve playlists with full song listings.
+  </Card>
+  <Card title="Search" href="/docs/search">
+    Full-text search across songs, albums, artists, and playlists.
+  </Card>
 </Cards>

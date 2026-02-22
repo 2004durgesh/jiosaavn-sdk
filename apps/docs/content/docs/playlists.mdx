@@ -1,0 +1,168 @@
+---
+title: Playlists
+description: Retrieve playlists with full song listings from JioSaavn.
+---
+
+import { TypeTable } from 'fumadocs-ui/components/type-table';
+
+## PlaylistService
+
+```ts
+import { PlaylistService } from 'jiosaavn-sdk'
+
+const playlistService = new PlaylistService()
+```
+
+---
+
+### getPlaylistById
+
+Fetch a playlist by its ID with pagination support.
+
+```ts
+const playlist = await playlistService.getPlaylistById({
+  id: '159470188',
+  limit: 20,
+  page: 0
+})
+```
+
+#### Parameters
+
+<TypeTable
+  type={{
+    id: {
+      description: 'The unique playlist ID',
+      type: 'string',
+      required: true,
+    },
+    limit: {
+      description: 'Max number of songs to include',
+      type: 'number',
+      required: true,
+    },
+    page: {
+      description: 'Page number for pagination',
+      type: 'number',
+      required: true,
+    },
+  }}
+/>
+
+**Returns:** `Promise<PlaylistModel>`
+
+**Throws:** `SaavnError(404)` if the playlist is not found.
+
+---
+
+### getPlaylistByLink
+
+Fetch a playlist by a JioSaavn link token.
+
+```ts
+const playlist = await playlistService.getPlaylistByLink({
+  token: 'xY3bZ9qR',
+  limit: 20,
+  page: 0
+})
+```
+
+#### Parameters
+
+<TypeTable
+  type={{
+    token: {
+      description: 'Token extracted from a JioSaavn playlist URL',
+      type: 'string',
+      required: true,
+    },
+    limit: {
+      description: 'Max number of songs to include',
+      type: 'number',
+      required: true,
+    },
+    page: {
+      description: 'Page number for pagination',
+      type: 'number',
+      required: true,
+    },
+  }}
+/>
+
+**Returns:** `Promise<PlaylistModel>`
+
+**Throws:** `SaavnError(404)` if the playlist is not found.
+
+---
+
+## PlaylistModel
+
+<TypeTable
+  type={{
+    id: {
+      description: 'Unique playlist identifier',
+      type: 'string',
+      required: true,
+    },
+    name: {
+      description: 'Playlist title',
+      type: 'string',
+      required: true,
+    },
+    description: {
+      description: 'Playlist description',
+      type: 'string | null',
+      required: true,
+    },
+    year: {
+      description: 'Year of creation',
+      type: 'number | null',
+      required: true,
+    },
+    type: {
+      description: 'Content type',
+      type: 'string',
+      required: true,
+    },
+    playCount: {
+      description: 'Total play count',
+      type: 'number | null',
+      required: true,
+    },
+    language: {
+      description: 'Playlist language',
+      type: 'string',
+      required: true,
+    },
+    explicitContent: {
+      description: 'Whether the playlist has explicit content',
+      type: 'boolean',
+      required: true,
+    },
+    songCount: {
+      description: 'Number of songs in the playlist',
+      type: 'number | null',
+      required: true,
+    },
+    url: {
+      description: 'JioSaavn permalink',
+      type: 'string',
+      required: true,
+    },
+    image: {
+      description: 'Playlist cover image URLs at various qualities',
+      type: 'DownloadLink[]',
+      required: true,
+    },
+    songs: {
+      description: 'Array of songs in the playlist',
+      type: 'SongModel[] | null',
+      required: true,
+    },
+    artists: {
+      description: 'Artists associated with this playlist',
+      type: 'ArtistMapModel[] | null',
+      required: true,
+    },
+  }}
+/>

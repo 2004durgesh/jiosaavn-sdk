@@ -1,0 +1,452 @@
+---
+title: Artists
+description: Look up artist profiles with top songs, albums, and similar artists.
+---
+
+import { TypeTable } from 'fumadocs-ui/components/type-table';
+
+## ArtistService
+
+```ts
+import { ArtistService } from 'jiosaavn-sdk'
+
+const artistService = new ArtistService()
+```
+
+---
+
+### getArtistById
+
+Fetch an artist profile by ID with their top songs and albums.
+
+```ts
+const artist = await artistService.getArtistById({
+  artistId: '1274170',
+  page: 0,
+  songCount: 10,
+  albumCount: 10,
+  sortBy: 'popularity',
+  sortOrder: 'asc'
+})
+```
+
+#### Parameters
+
+<TypeTable
+  type={{
+    artistId: {
+      description: 'The unique artist ID',
+      type: 'string',
+      required: true,
+    },
+    page: {
+      description: 'Page number for paginated results',
+      type: 'number',
+      required: true,
+    },
+    songCount: {
+      description: 'Number of top songs to include',
+      type: 'number',
+      required: true,
+    },
+    albumCount: {
+      description: 'Number of top albums to include',
+      type: 'number',
+      required: true,
+    },
+    sortBy: {
+      description: 'Sort criteria for results',
+      type: "'popularity' | 'latest' | 'alphabetical'",
+      required: true,
+    },
+    sortOrder: {
+      description: 'Sort direction',
+      type: "'asc' | 'desc'",
+      required: true,
+    },
+  }}
+/>
+
+**Returns:** `Promise<ArtistModel>`
+
+**Throws:** `SaavnError(404)` if the artist is not found.
+
+---
+
+### getArtistByLink
+
+Fetch an artist by a JioSaavn link token. Same parameters as `getArtistById`, but with `token` instead of `artistId`.
+
+```ts
+const artist = await artistService.getArtistByLink({
+  token: 'r-OWIKgpX2I_',
+  page: 0,
+  songCount: 10,
+  albumCount: 10,
+  sortBy: 'popularity',
+  sortOrder: 'asc'
+})
+```
+
+#### Parameters
+
+<TypeTable
+  type={{
+    token: {
+      description: 'Token extracted from a JioSaavn artist URL',
+      type: 'string',
+      required: true,
+    },
+    page: {
+      description: 'Page number for paginated results',
+      type: 'number',
+      required: true,
+    },
+    songCount: {
+      description: 'Number of top songs to include',
+      type: 'number',
+      required: true,
+    },
+    albumCount: {
+      description: 'Number of top albums to include',
+      type: 'number',
+      required: true,
+    },
+    sortBy: {
+      description: 'Sort criteria',
+      type: "'popularity' | 'latest' | 'alphabetical'",
+      required: true,
+    },
+    sortOrder: {
+      description: 'Sort direction',
+      type: "'asc' | 'desc'",
+      required: true,
+    },
+  }}
+/>
+
+**Returns:** `Promise<ArtistModel>`
+
+**Throws:** `SaavnError(404)` if the artist is not found.
+
+---
+
+### getArtistSongs
+
+Fetch an artist's songs with pagination and sorting.
+
+```ts
+const result = await artistService.getArtistSongs({
+  artistId: '1274170',
+  page: 0,
+  sortBy: 'popularity',
+  sortOrder: 'desc'
+})
+```
+
+#### Parameters
+
+<TypeTable
+  type={{
+    artistId: {
+      description: 'The artist ID',
+      type: 'string',
+      required: true,
+    },
+    page: {
+      description: 'Page number',
+      type: 'number',
+      required: true,
+    },
+    sortBy: {
+      description: 'Sort criteria',
+      type: "'popularity' | 'latest' | 'alphabetical'",
+      required: true,
+    },
+    sortOrder: {
+      description: 'Sort direction',
+      type: "'asc' | 'desc'",
+      required: true,
+    },
+  }}
+/>
+
+#### Return Type — ArtistSongModel
+
+<TypeTable
+  type={{
+    total: {
+      description: 'Total number of songs',
+      type: 'number',
+      required: true,
+    },
+    songs: {
+      description: 'Array of song objects',
+      type: 'SongModel[]',
+      required: true,
+    },
+  }}
+/>
+
+**Throws:** `SaavnError(404)` if the artist's songs are not found.
+
+---
+
+### getArtistAlbums
+
+Fetch an artist's albums with pagination and sorting.
+
+```ts
+const result = await artistService.getArtistAlbums({
+  artistId: '1274170',
+  page: 0,
+  sortBy: 'latest',
+  sortOrder: 'desc'
+})
+```
+
+#### Parameters
+
+<TypeTable
+  type={{
+    artistId: {
+      description: 'The artist ID',
+      type: 'string',
+      required: true,
+    },
+    page: {
+      description: 'Page number',
+      type: 'number',
+      required: true,
+    },
+    sortBy: {
+      description: 'Sort criteria',
+      type: "'popularity' | 'latest' | 'alphabetical'",
+      required: true,
+    },
+    sortOrder: {
+      description: 'Sort direction',
+      type: "'asc' | 'desc'",
+      required: true,
+    },
+  }}
+/>
+
+#### Return Type — ArtistAlbumModel
+
+<TypeTable
+  type={{
+    total: {
+      description: 'Total number of albums',
+      type: 'number',
+      required: true,
+    },
+    albums: {
+      description: 'Array of album objects',
+      type: 'AlbumModel[]',
+      required: true,
+    },
+  }}
+/>
+
+**Throws:** `SaavnError(404)` if the artist's albums are not found.
+
+---
+
+## ArtistModel
+
+Full artist profile returned by `getArtistById` and `getArtistByLink`.
+
+<TypeTable
+  type={{
+    id: {
+      description: 'Unique artist identifier',
+      type: 'string',
+      required: true,
+    },
+    name: {
+      description: 'Artist name',
+      type: 'string',
+      required: true,
+    },
+    url: {
+      description: 'JioSaavn permalink',
+      type: 'string',
+      required: true,
+    },
+    type: {
+      description: 'Content type',
+      type: 'string',
+      required: true,
+    },
+    image: {
+      description: 'Artist image URLs at various qualities',
+      type: 'DownloadLink[]',
+      required: true,
+    },
+    followerCount: {
+      description: 'Number of followers',
+      type: 'number | null',
+      required: true,
+    },
+    fanCount: {
+      description: 'Number of fans',
+      type: 'string | null',
+      required: true,
+    },
+    isVerified: {
+      description: 'Whether the artist is verified',
+      type: 'boolean | null',
+      required: true,
+    },
+    dominantLanguage: {
+      description: 'Primary language of the artist',
+      type: 'string | null',
+      required: true,
+    },
+    dominantType: {
+      description: 'Primary content type',
+      type: 'string | null',
+      required: true,
+    },
+    bio: {
+      description: 'Artist biography sections',
+      type: '{ text: string | null, title: string | null, sequence: number | null }[] | null',
+      required: true,
+    },
+    dob: {
+      description: 'Date of birth',
+      type: 'string | null',
+      required: true,
+    },
+    fb: {
+      description: 'Facebook profile URL',
+      type: 'string | null',
+      required: true,
+    },
+    twitter: {
+      description: 'Twitter profile URL',
+      type: 'string | null',
+      required: true,
+    },
+    wiki: {
+      description: 'Wikipedia page URL',
+      type: 'string | null',
+      required: true,
+    },
+    availableLanguages: {
+      description: 'Languages in which the artist has content',
+      type: 'string[]',
+      required: true,
+    },
+    isRadioPresent: {
+      description: 'Whether a radio station exists for this artist',
+      type: 'boolean | null',
+      required: true,
+    },
+    topSongs: {
+      description: 'Top songs by this artist',
+      type: 'SongModel[] | null',
+      required: true,
+    },
+    topAlbums: {
+      description: 'Top albums by this artist',
+      type: 'AlbumModel[] | null',
+      required: true,
+    },
+    singles: {
+      description: 'Singles released by this artist',
+      type: 'SongModel[] | null',
+      required: true,
+    },
+    similarArtists: {
+      description: 'List of similar artists',
+      type: 'SimilarArtist[] | null',
+      required: true,
+    },
+  }}
+/>
+
+### SimilarArtist
+
+Nested type within `ArtistModel.similarArtists`.
+
+<TypeTable
+  type={{
+    id: {
+      description: 'Artist ID',
+      type: 'string',
+      required: true,
+    },
+    name: {
+      description: 'Artist name',
+      type: 'string',
+      required: true,
+    },
+    url: {
+      description: 'JioSaavn permalink',
+      type: 'string',
+      required: true,
+    },
+    image: {
+      description: 'Image URLs',
+      type: 'DownloadLink[]',
+      required: true,
+    },
+    languages: {
+      description: 'Language map',
+      type: 'Record<string, string> | null',
+      required: true,
+    },
+    wiki: {
+      description: 'Wikipedia URL',
+      type: 'string',
+      required: true,
+    },
+    dob: {
+      description: 'Date of birth',
+      type: 'string',
+      required: true,
+    },
+    fb: {
+      description: 'Facebook URL',
+      type: 'string',
+      required: true,
+    },
+    twitter: {
+      description: 'Twitter URL',
+      type: 'string',
+      required: true,
+    },
+    isRadioPresent: {
+      description: 'Whether radio is available',
+      type: 'boolean',
+      required: true,
+    },
+    type: {
+      description: 'Content type',
+      type: 'string',
+      required: true,
+    },
+    dominantType: {
+      description: 'Primary content type',
+      type: 'string',
+      required: true,
+    },
+    aka: {
+      description: 'Also known as',
+      type: 'string',
+      required: true,
+    },
+    bio: {
+      description: 'Short biography',
+      type: 'string | null',
+      required: true,
+    },
+    similarArtists: {
+      description: 'Nested similar artists (id + name only)',
+      type: '{ id: string, name: string }[] | null',
+      required: true,
+    },
+  }}
+/>
