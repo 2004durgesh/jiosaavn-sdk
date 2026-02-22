@@ -1,8 +1,8 @@
-import { createImageLinks } from '#common/helpers'
-import { createArtistMapPayload } from '#modules/artists/helpers'
-import { createSongPayload } from '#modules/songs/helpers'
-import type { AlbumAPIResponseModel, AlbumModel } from '#modules/albums/models'
-import type { z } from 'zod'
+import { createImageLinks } from '#common/helpers';
+import { createArtistMapPayload } from '#modules/artists/helpers';
+import { createSongPayload } from '#modules/songs/helpers';
+import type { AlbumAPIResponseModel, AlbumModel } from '#modules/albums/models';
+import type { z } from 'zod';
 
 export const createAlbumPayload = (album: z.infer<typeof AlbumAPIResponseModel>): z.infer<typeof AlbumModel> => ({
   id: album.id,
@@ -18,8 +18,8 @@ export const createAlbumPayload = (album: z.infer<typeof AlbumAPIResponseModel>)
   artists: {
     primary: album.more_info?.artistMap?.primary_artists?.map(createArtistMapPayload),
     featured: album.more_info?.artistMap?.featured_artists?.map(createArtistMapPayload),
-    all: album.more_info?.artistMap?.artists?.map(createArtistMapPayload)
+    all: album.more_info?.artistMap?.artists?.map(createArtistMapPayload),
   },
   image: createImageLinks(album.image),
-  songs: (album.list && album.list?.map(createSongPayload)) || null
-})
+  songs: (album.list && album.list?.map(createSongPayload)) || null,
+});

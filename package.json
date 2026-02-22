@@ -9,6 +9,17 @@
     "dev:docs": "npm run dev -w apps/docs",
     "build:sdk": "npm run build -w packages/sdk",
     "test:sdk": "npm run test -w packages/sdk",
-    "typecheck:sdk": "npm run typecheck -w packages/sdk"
+    "typecheck:sdk": "npm run typecheck -w packages/sdk",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "prepare": "lefthook install"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^20.4.2",
+    "@commitlint/config-conventional": "^20.4.2",
+    "@release-it/conventional-changelog": "^10.0.5",
+    "lefthook": "^2.1.1",
+    "prettier": "^3.8.1",
+    "release-it": "^19.2.4"
   }
 }

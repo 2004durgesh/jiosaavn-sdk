@@ -1,15 +1,15 @@
-import { Endpoints } from '#common/constants'
-import { useFetch } from '#common/helpers'
-import { createPlaylistPayload } from '#modules/playlists/helpers'
-import { SaavnError } from '#common/errors'
-import type { IUseCase } from '#common/types'
-import type { PlaylistAPIResponseModel, PlaylistModel } from '#modules/playlists/models'
-import type { z } from 'zod'
+import { Endpoints } from '#common/constants';
+import { useFetch } from '#common/helpers';
+import { createPlaylistPayload } from '#modules/playlists/helpers';
+import { SaavnError } from '#common/errors';
+import type { IUseCase } from '#common/types';
+import type { PlaylistAPIResponseModel, PlaylistModel } from '#modules/playlists/models';
+import type { z } from 'zod';
 
 export interface GetPlaylistByLinkArgs {
-  token: string
-  limit: number
-  page: number
+  token: string;
+  limit: number;
+  page: number;
 }
 
 export class GetPlaylistByLinkUseCase implements IUseCase<GetPlaylistByLinkArgs, z.infer<typeof PlaylistModel>> {
@@ -22,18 +22,18 @@ export class GetPlaylistByLinkUseCase implements IUseCase<GetPlaylistByLinkArgs,
         token,
         n: limit,
         p: page,
-        type: 'playlist'
-      }
-    })
+        type: 'playlist',
+      },
+    });
 
-    if (!data) throw new SaavnError(404, 'playlist not found')
+    if (!data) throw new SaavnError(404, 'playlist not found');
 
-    const playlist = createPlaylistPayload(data)
+    const playlist = createPlaylistPayload(data);
 
     return {
       ...playlist,
       songCount: playlist?.songs?.length || null,
-      songs: playlist?.songs?.slice(0, limit) || []
-    }
+      songs: playlist?.songs?.slice(0, limit) || [],
+    };
   }
 }

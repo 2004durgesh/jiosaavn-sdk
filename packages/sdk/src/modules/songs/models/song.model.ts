@@ -1,6 +1,6 @@
-import { DownloadLinkModel } from '#common/models'
-import { ArtistMapAPIResponseModel, ArtistMapModel } from '#modules/artists/models/artist-map.model'
-import { z } from 'zod'
+import { DownloadLinkModel } from '#common/models';
+import { ArtistMapAPIResponseModel, ArtistMapModel } from '#modules/artists/models/artist-map.model';
+import { z } from 'zod';
 
 export const SongAPIResponseModel = z.object({
   id: z.string(),
@@ -18,43 +18,43 @@ export const SongAPIResponseModel = z.object({
   list_type: z.string(),
   list: z.string(),
   more_info: z.object({
-    music: z.string(),
-    album_id: z.string(),
-    album: z.string(),
-    label: z.string(),
-    origin: z.string(),
-    is_dolby_content: z.boolean(),
+    'music': z.string(),
+    'album_id': z.string(),
+    'album': z.string(),
+    'label': z.string(),
+    'origin': z.string(),
+    'is_dolby_content': z.boolean(),
     '320kbps': z.string(),
-    encrypted_media_url: z.string(),
-    encrypted_cache_url: z.string(),
-    album_url: z.string(),
-    duration: z.string(),
-    rights: z.object({
+    'encrypted_media_url': z.string(),
+    'encrypted_cache_url': z.string(),
+    'album_url': z.string(),
+    'duration': z.string(),
+    'rights': z.object({
       code: z.string(),
       cacheable: z.string(),
       delete_cached_object: z.string(),
-      reason: z.string()
+      reason: z.string(),
     }),
-    cache_state: z.string(),
-    has_lyrics: z.string(),
-    lyrics_snippet: z.string(),
-    starred: z.string(),
-    copyright_text: z.string(),
-    artistMap: z.object({
+    'cache_state': z.string(),
+    'has_lyrics': z.string(),
+    'lyrics_snippet': z.string(),
+    'starred': z.string(),
+    'copyright_text': z.string(),
+    'artistMap': z.object({
       primary_artists: z.array(ArtistMapAPIResponseModel),
       featured_artists: z.array(ArtistMapAPIResponseModel),
-      artists: z.array(ArtistMapAPIResponseModel)
+      artists: z.array(ArtistMapAPIResponseModel),
     }),
-    release_date: z.string(),
-    label_url: z.string(),
-    vcode: z.string(),
-    vlink: z.string(),
-    triller_available: z.boolean(),
-    request_jiotune_flag: z.boolean(),
-    webp: z.string(),
-    lyrics_id: z.string()
-  })
-})
+    'release_date': z.string(),
+    'label_url': z.string(),
+    'vcode': z.string(),
+    'vlink': z.string(),
+    'triller_available': z.boolean(),
+    'request_jiotune_flag': z.boolean(),
+    'webp': z.string(),
+    'lyrics_id': z.string(),
+  }),
+});
 
 export const SongModel = z.object({
   id: z.string(),
@@ -74,13 +74,13 @@ export const SongModel = z.object({
   album: z.object({
     id: z.string().nullable(),
     name: z.string().nullable(),
-    url: z.string().nullable()
+    url: z.string().nullable(),
   }),
   artists: z.object({
     primary: z.array(ArtistMapModel),
     featured: z.array(ArtistMapModel),
-    all: z.array(ArtistMapModel)
+    all: z.array(ArtistMapModel),
   }),
   image: z.array(DownloadLinkModel),
-  downloadUrl: z.array(DownloadLinkModel)
-})
+  downloadUrl: z.array(DownloadLinkModel),
+});

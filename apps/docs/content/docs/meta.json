@@ -9,6 +9,7 @@
     "albums",
     "artists",
     "playlists",
-    "search"
+    "search",
+    "discover"
   ]
 }

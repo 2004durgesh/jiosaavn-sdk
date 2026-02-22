@@ -1,7 +1,7 @@
-import { DownloadLinkModel } from '#common/models'
-import { ArtistMapModel } from '#modules/artists/models'
-import { SongAPIResponseModel, SongModel } from '#modules/songs/models'
-import { z } from 'zod'
+import { DownloadLinkModel } from '#common/models';
+import { ArtistMapModel } from '#modules/artists/models';
+import { SongAPIResponseModel, SongModel } from '#modules/songs/models';
+import { z } from 'zod';
 
 export const PlaylistAPIResponseModel = z
   .object({
@@ -45,14 +45,14 @@ export const PlaylistAPIResponseModel = z
           role: z.string(),
           image: z.string(),
           type: z.string(),
-          perma_url: z.string()
+          perma_url: z.string(),
         })
-      )
-    })
+      ),
+    }),
   })
   .extend({
-    description: z.string()
-  })
+    description: z.string(),
+  });
 
 export const PlaylistModel = z.object({
   id: z.string(),
@@ -67,5 +67,5 @@ export const PlaylistModel = z.object({
   url: z.string(),
   image: z.array(DownloadLinkModel),
   songs: z.array(SongModel).nullable(),
-  artists: z.array(ArtistMapModel).nullable()
-})
+  artists: z.array(ArtistMapModel).nullable(),
+});

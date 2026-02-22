@@ -1,6 +1,6 @@
-import { DownloadLinkModel } from '#common/models'
-import { SongAPIResponseModel, SongModel } from '#modules/songs/models'
-import { z } from 'zod'
+import { DownloadLinkModel } from '#common/models';
+import { SongAPIResponseModel, SongModel } from '#modules/songs/models';
+import { z } from 'zod';
 
 export const AlbumAPIResponseModel = z.object({
   id: z.string(),
@@ -22,9 +22,9 @@ export const AlbumAPIResponseModel = z.object({
     song_count: z.string(),
     copyright_text: z.string(),
     is_dolby_content: z.boolean(),
-    label_url: z.string()
-  })
-})
+    label_url: z.string(),
+  }),
+});
 
 export const AlbumModel = z.object({
   id: z.string(),
@@ -39,5 +39,5 @@ export const AlbumModel = z.object({
   songCount: z.number().nullable(),
   url: z.string(),
   image: z.array(DownloadLinkModel),
-  songs: z.array(SongModel).nullable()
-})
+  songs: z.array(SongModel).nullable(),
+});

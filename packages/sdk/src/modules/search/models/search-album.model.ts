@@ -1,6 +1,6 @@
-import { DownloadLinkModel } from '#common/models'
-import { SongAPIResponseModel, SongModel } from '#modules/songs/models'
-import { z } from 'zod'
+import { DownloadLinkModel } from '#common/models';
+import { SongAPIResponseModel, SongModel } from '#modules/songs/models';
+import { z } from 'zod';
 
 export const SearchAlbumAPIResponseModel = z.object({
   total: z.number(),
@@ -26,11 +26,11 @@ export const SearchAlbumAPIResponseModel = z.object({
         text: z.string(),
         music: z.string(),
         song_count: z.string(),
-        artistMap: SongAPIResponseModel.shape.more_info.shape.artistMap
-      })
+        artistMap: SongAPIResponseModel.shape.more_info.shape.artistMap,
+      }),
     })
-  )
-})
+  ),
+});
 
 export const SearchAlbumModel = z.object({
   total: z.number(),
@@ -47,7 +47,7 @@ export const SearchAlbumModel = z.object({
       explicitContent: z.boolean(),
       artists: z.object(SongModel.shape.artists.shape),
       url: z.string(),
-      image: z.array(DownloadLinkModel)
+      image: z.array(DownloadLinkModel),
     })
-  )
-})
+  ),
+});

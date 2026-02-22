@@ -1,8 +1,8 @@
-import { createImageLinks } from '#common/helpers'
-import { createArtistMapPayload } from '#modules/artists/helpers'
-import { createSongPayload } from '#modules/songs/helpers'
-import type { PlaylistAPIResponseModel, PlaylistModel } from '#modules/playlists/models'
-import type { z } from 'zod'
+import { createImageLinks } from '#common/helpers';
+import { createArtistMapPayload } from '#modules/artists/helpers';
+import { createSongPayload } from '#modules/songs/helpers';
+import type { PlaylistAPIResponseModel, PlaylistModel } from '#modules/playlists/models';
+import type { z } from 'zod';
 
 export const createPlaylistPayload = (
   playlist: z.infer<typeof PlaylistAPIResponseModel>
@@ -19,5 +19,5 @@ export const createPlaylistPayload = (
   songCount: playlist.list_count ? Number(playlist.list_count) : null,
   artists: playlist.more_info.artists?.map(createArtistMapPayload) || null,
   image: createImageLinks(playlist.image),
-  songs: (playlist.list && playlist.list?.map(createSongPayload)) || null
-})
+  songs: (playlist.list && playlist.list?.map(createSongPayload)) || null,
+});

@@ -1,18 +1,18 @@
-import { Endpoints } from '#common/constants'
-import { useFetch } from '#common/helpers'
-import { createArtistPayload } from '#modules/artists/helpers'
-import { SaavnError } from '#common/errors'
-import type { IUseCase } from '#common/types'
-import type { ArtistAPIResponseModel, ArtistModel } from '#modules/artists/models'
-import type { z } from 'zod'
+import { Endpoints } from '#common/constants';
+import { useFetch } from '#common/helpers';
+import { createArtistPayload } from '#modules/artists/helpers';
+import { SaavnError } from '#common/errors';
+import type { IUseCase } from '#common/types';
+import type { ArtistAPIResponseModel, ArtistModel } from '#modules/artists/models';
+import type { z } from 'zod';
 
 export interface GetArtistByLinkArgs {
-  token: string
-  page: number
-  songCount: number
-  albumCount: number
-  sortBy: 'popularity' | 'latest' | 'alphabetical'
-  sortOrder: 'asc' | 'desc'
+  token: string;
+  page: number;
+  songCount: number;
+  albumCount: number;
+  sortBy: 'popularity' | 'latest' | 'alphabetical';
+  sortOrder: 'asc' | 'desc';
 }
 
 export class GetArtistByLinkUseCase implements IUseCase<GetArtistByLinkArgs, z.infer<typeof ArtistModel>> {
@@ -28,12 +28,12 @@ export class GetArtistByLinkUseCase implements IUseCase<GetArtistByLinkArgs, z.i
         page,
         sort_order: sortOrder,
         category: sortBy,
-        type: 'artist'
-      }
-    })
+        type: 'artist',
+      },
+    });
 
-    if (!data) throw new SaavnError(404, 'artist not found')
+    if (!data) throw new SaavnError(404, 'artist not found');
 
-    return createArtistPayload(data)
+    return createArtistPayload(data);
   }
 }

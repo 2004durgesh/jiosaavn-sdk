@@ -1,15 +1,15 @@
-import { Endpoints } from '#common/constants'
-import { useFetch } from '#common/helpers'
-import { createSearchPlaylistPayload } from '#modules/search/helpers'
-import { SaavnError } from '#common/errors'
-import type { IUseCase } from '#common/types'
-import type { SearchPlaylistAPIResponseModel, SearchPlaylistModel } from '#modules/search/models'
-import type { z } from 'zod'
+import { Endpoints } from '#common/constants';
+import { useFetch } from '#common/helpers';
+import { createSearchPlaylistPayload } from '#modules/search/helpers';
+import { SaavnError } from '#common/errors';
+import type { IUseCase } from '#common/types';
+import type { SearchPlaylistAPIResponseModel, SearchPlaylistModel } from '#modules/search/models';
+import type { z } from 'zod';
 
 export interface SearchPlaylistsArgs {
-  query: string
-  page: number
-  limit: number
+  query: string;
+  page: number;
+  limit: number;
 }
 
 export class SearchPlaylistsUseCase implements IUseCase<SearchPlaylistsArgs, z.infer<typeof SearchPlaylistModel>> {
@@ -21,12 +21,12 @@ export class SearchPlaylistsUseCase implements IUseCase<SearchPlaylistsArgs, z.i
       params: {
         q: query,
         p: page,
-        n: limit
-      }
-    })
+        n: limit,
+      },
+    });
 
-    if (!data) throw new SaavnError(404, 'playlist not found')
+    if (!data) throw new SaavnError(404, 'playlist not found');
 
-    return createSearchPlaylistPayload(data)
+    return createSearchPlaylistPayload(data);
   }
 }

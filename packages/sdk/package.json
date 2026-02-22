@@ -19,7 +19,8 @@
     "test:bun": "bunx vitest run",
     "test:browser": "vitest run --environment jsdom",
     "test:all-runtimes": "npm run test:node && npm run test:bun && npm run test:browser",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "release": "release-it"
   },
   "keywords": [
     "jiosaavn",

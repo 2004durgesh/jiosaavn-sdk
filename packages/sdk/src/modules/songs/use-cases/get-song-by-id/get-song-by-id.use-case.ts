@@ -1,13 +1,13 @@
-import { Endpoints } from '#common/constants'
-import { useFetch } from '#common/helpers'
-import { createSongPayload } from '#modules/songs/helpers'
-import { SaavnError } from '#common/errors'
-import type { IUseCase } from '#common/types'
-import type { SongAPIResponseModel, SongModel } from '#modules/songs/models'
-import type { z } from 'zod'
+import { Endpoints } from '#common/constants';
+import { useFetch } from '#common/helpers';
+import { createSongPayload } from '#modules/songs/helpers';
+import { SaavnError } from '#common/errors';
+import type { IUseCase } from '#common/types';
+import type { SongAPIResponseModel, SongModel } from '#modules/songs/models';
+import type { z } from 'zod';
 
 export interface GetSongByIdArgs {
-  songIds: string
+  songIds: string;
 }
 
 export class GetSongByIdUseCase implements IUseCase<GetSongByIdArgs, z.infer<typeof SongModel>[]> {
@@ -17,14 +17,14 @@ export class GetSongByIdUseCase implements IUseCase<GetSongByIdArgs, z.infer<typ
     const { data } = await useFetch<{ songs: z.infer<typeof SongAPIResponseModel>[] }>({
       endpoint: Endpoints.songs.id,
       params: {
-        pids: songIds
-      }
-    })
+        pids: songIds,
+      },
+    });
 
-    if (!data.songs?.length) throw new SaavnError(404, 'song not found')
+    if (!data.songs?.length) throw new SaavnError(404, 'song not found');
 
-    const songs = data.songs.map((song) => createSongPayload(song))
+    const songs = data.songs.map((song) => createSongPayload(song));
 
-    return songs
+    return songs;
   }
 }

@@ -1,13 +1,13 @@
-import { createImageLinks } from '#common/helpers'
-import { createAlbumPayload } from '#modules/albums/helpers'
-import { createSongPayload } from '#modules/songs/helpers'
+import { createImageLinks } from '#common/helpers';
+import { createAlbumPayload } from '#modules/albums/helpers';
+import { createSongPayload } from '#modules/songs/helpers';
 import type {
   ArtistAPIResponseModel,
   ArtistMapAPIResponseModel,
   ArtistMapModel,
-  ArtistModel
-} from '#modules/artists/models'
-import type { z } from 'zod'
+  ArtistModel,
+} from '#modules/artists/models';
+import type { z } from 'zod';
 
 export const createArtistPayload = (artist: z.infer<typeof ArtistAPIResponseModel>): z.infer<typeof ArtistModel> => ({
   id: artist.artistId || artist.id,
@@ -46,9 +46,9 @@ export const createArtistPayload = (artist: z.infer<typeof ArtistAPIResponseMode
       dominantType: similarArtist.dominantType,
       aka: similarArtist.aka,
       bio: similarArtist.bio ? JSON.parse(similarArtist.bio) : null,
-      similarArtists: similarArtist.similar ? JSON.parse(similarArtist.similar) : null
-    })) || null
-})
+      similarArtists: similarArtist.similar ? JSON.parse(similarArtist.similar) : null,
+    })) || null,
+});
 
 export const createArtistMapPayload = (
   artist: z.infer<typeof ArtistMapAPIResponseModel>
@@ -58,5 +58,5 @@ export const createArtistMapPayload = (
   role: artist.role,
   image: createImageLinks(artist.image),
   type: artist.type,
-  url: artist.perma_url
-})
+  url: artist.perma_url,
+});

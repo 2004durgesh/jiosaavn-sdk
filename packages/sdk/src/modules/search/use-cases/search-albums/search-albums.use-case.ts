@@ -1,14 +1,14 @@
-import { Endpoints } from '#common/constants'
-import { useFetch } from '#common/helpers'
-import { createSearchAlbumPayload } from '#modules/search/helpers'
-import type { IUseCase } from '#common/types'
-import type { SearchAlbumAPIResponseModel, SearchAlbumModel } from '#modules/search/models'
-import type { z } from 'zod'
+import { Endpoints } from '#common/constants';
+import { useFetch } from '#common/helpers';
+import { createSearchAlbumPayload } from '#modules/search/helpers';
+import type { IUseCase } from '#common/types';
+import type { SearchAlbumAPIResponseModel, SearchAlbumModel } from '#modules/search/models';
+import type { z } from 'zod';
 
 export interface SearchAlbumsArgs {
-  query: string
-  page: number
-  limit: number
+  query: string;
+  page: number;
+  limit: number;
 }
 
 export class SearchAlbumsUseCase implements IUseCase<SearchAlbumsArgs, z.infer<typeof SearchAlbumModel>> {
@@ -20,10 +20,10 @@ export class SearchAlbumsUseCase implements IUseCase<SearchAlbumsArgs, z.infer<t
       params: {
         q: query,
         p: page,
-        n: limit
-      }
-    })
+        n: limit,
+      },
+    });
 
-    return createSearchAlbumPayload(data)
+    return createSearchAlbumPayload(data);
   }
 }

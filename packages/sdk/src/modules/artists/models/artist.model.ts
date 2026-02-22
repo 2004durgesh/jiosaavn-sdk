@@ -1,7 +1,7 @@
-import { DownloadLinkModel } from '#common/models'
-import { AlbumAPIResponseModel, AlbumModel } from '#modules/albums/models'
-import { SongAPIResponseModel, SongModel } from '#modules/songs/models'
-import { z } from 'zod'
+import { DownloadLinkModel } from '#common/models';
+import { AlbumAPIResponseModel, AlbumModel } from '#modules/albums/models';
+import { SongAPIResponseModel, SongModel } from '#modules/songs/models';
+import { z } from 'zod';
 
 export const ArtistAPIResponseModel = z
   .object({
@@ -37,11 +37,11 @@ export const ArtistAPIResponseModel = z
           images: z.any(),
           lastname: z.string(),
           song_count: z.string(),
-          language: z.string()
+          language: z.string(),
         }),
         explicit_content: z.string(),
         mini_obj: z.boolean(),
-        numsongs: z.number()
+        numsongs: z.number(),
       })
     ),
     featured_artist_playlist: z.array(
@@ -64,11 +64,11 @@ export const ArtistAPIResponseModel = z
           images: z.any(),
           lastname: z.string(),
           song_count: z.string(),
-          language: z.string()
+          language: z.string(),
         }),
         explicit_content: z.string(),
         mini_obj: z.boolean(),
-        numsongs: z.number()
+        numsongs: z.number(),
       })
     ),
     similarArtists: z.array(
@@ -96,7 +96,7 @@ export const ArtistAPIResponseModel = z
         type: z.string(),
         mini_obj: z.boolean(),
         isRadioPresent: z.boolean(),
-        dominantType: z.string()
+        dominantType: z.string(),
       })
     ),
     isRadioPresent: z.boolean(),
@@ -110,17 +110,17 @@ export const ArtistAPIResponseModel = z
       bio: z.string(),
       comments: z.string(),
       songs: z.string(),
-      overview: z.string()
+      overview: z.string(),
     }),
     availableLanguages: z.array(z.string()),
     fan_count: z.string(),
     topEpisodes: z.array(z.any()),
-    is_followed: z.boolean()
+    is_followed: z.boolean(),
   })
   .extend({
     id: z.string(),
-    perma_url: z.string()
-  })
+    perma_url: z.string(),
+  });
 
 export const ArtistModel = z.object({
   id: z.string(),
@@ -138,7 +138,7 @@ export const ArtistModel = z.object({
       z.object({
         text: z.string().nullable(),
         title: z.string().nullable(),
-        sequence: z.number().nullable()
+        sequence: z.number().nullable(),
       })
     )
     .nullable(),
@@ -172,11 +172,11 @@ export const ArtistModel = z.object({
           .array(
             z.object({
               id: z.string(),
-              name: z.string()
+              name: z.string(),
             })
           )
-          .nullable()
+          .nullable(),
       })
     )
-    .nullable()
-})
+    .nullable(),
+});

@@ -4,29 +4,35 @@ export const Endpoints = {
     songs: 'search.getResults',
     albums: 'search.getAlbumResults',
     artists: 'search.getArtistResults',
-    playlists: 'search.getPlaylistResults'
+    playlists: 'search.getPlaylistResults',
   },
   songs: {
     id: 'song.getDetails',
     link: 'webapi.get',
     suggestions: 'webradio.getSong',
     lyrics: 'lyrics.getLyrics',
-    station: 'webradio.createEntityStation'
+    station: 'webradio.createEntityStation',
   },
   albums: {
     id: 'content.getAlbumDetails',
-    link: 'webapi.get'
+    link: 'webapi.get',
   },
   artists: {
     id: 'artist.getArtistPageDetails',
     link: 'webapi.get',
     songs: 'artist.getArtistMoreSong',
-    albums: 'artist.getArtistMoreAlbum'
+    albums: 'artist.getArtistMoreAlbum',
   },
   playlists: {
     id: 'playlist.getDetails',
-    link: 'webapi.get'
+    link: 'webapi.get',
+  },
+  discover: {
+    topArtists: 'social.getTopArtists',
+    featuredPlaylists: 'content.getFeaturedPlaylists',
+    newReleases: 'content.getAlbums',
+    charts: 'content.getCharts',
   },
   modules: 'content.getBrowseModules',
-  trending: 'content.getTrending'
-}
+  trending: 'content.getTrending',
+};

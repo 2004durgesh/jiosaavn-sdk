@@ -1,5 +1,5 @@
-import { SongAPIResponseModel, SongModel } from '#modules/songs/models'
-import { z } from 'zod'
+import { SongAPIResponseModel, SongModel } from '#modules/songs/models';
+import { z } from 'zod';
 
 export const ArtistSongAPIResponseModel = z.object({
   artistId: z.string(),
@@ -13,11 +13,11 @@ export const ArtistSongAPIResponseModel = z.object({
   dominantType: z.string(),
   topSongs: z.object({
     songs: z.array(SongAPIResponseModel),
-    total: z.number()
-  })
-})
+    total: z.number(),
+  }),
+});
 
 export const ArtistSongModel = z.object({
   total: z.number(),
-  songs: z.array(SongModel)
-})
+  songs: z.array(SongModel),
+});

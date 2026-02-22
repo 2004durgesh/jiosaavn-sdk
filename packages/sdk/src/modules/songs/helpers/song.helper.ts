@@ -1,7 +1,7 @@
-import { createDownloadLinks, createImageLinks } from '#common/helpers'
-import { createArtistMapPayload } from '#modules/artists/helpers'
-import type { SongAPIResponseModel, SongModel } from '#modules/songs/models'
-import type { z } from 'zod'
+import { createDownloadLinks, createImageLinks } from '#common/helpers';
+import { createArtistMapPayload } from '#modules/artists/helpers';
+import type { SongAPIResponseModel, SongModel } from '#modules/songs/models';
+import type { z } from 'zod';
 
 export const createSongPayload = (song: z.infer<typeof SongAPIResponseModel>): z.infer<typeof SongModel> => ({
   id: song.id,
@@ -21,13 +21,13 @@ export const createSongPayload = (song: z.infer<typeof SongAPIResponseModel>): z
   album: {
     id: song.more_info?.album_id || null,
     name: song.more_info?.album || null,
-    url: song.more_info?.album_url || null
+    url: song.more_info?.album_url || null,
   },
   artists: {
     primary: song.more_info?.artistMap?.primary_artists?.map(createArtistMapPayload),
     featured: song.more_info?.artistMap?.featured_artists?.map(createArtistMapPayload),
-    all: song.more_info?.artistMap?.artists?.map(createArtistMapPayload)
+    all: song.more_info?.artistMap?.artists?.map(createArtistMapPayload),
   },
   image: createImageLinks(song.image),
-  downloadUrl: createDownloadLinks(song.more_info?.encrypted_media_url)
-})
+  downloadUrl: createDownloadLinks(song.more_info?.encrypted_media_url),
+});

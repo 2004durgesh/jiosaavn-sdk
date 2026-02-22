@@ -1,7 +1,7 @@
 interface Obj {
-  [key: string]: any
+  [key: string]: any;
 }
 
 export interface IUseCase<T extends Obj | string = any, TRes = any> {
-  execute: (params: T) => Promise<TRes>
+  execute: (params: T) => Promise<TRes>;
 }

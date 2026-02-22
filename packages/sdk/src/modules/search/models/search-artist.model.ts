@@ -1,5 +1,5 @@
-import { DownloadLinkModel } from '#common/models'
-import { z } from 'zod'
+import { DownloadLinkModel } from '#common/models';
+import { z } from 'zod';
 
 export const SearchArtistAPIResponseModel = z.object({
   total: z.number(),
@@ -16,10 +16,10 @@ export const SearchArtistAPIResponseModel = z.object({
       type: z.string(),
       mini_obj: z.boolean(),
       isRadioPresent: z.boolean(),
-      is_followed: z.boolean()
+      is_followed: z.boolean(),
     })
-  )
-})
+  ),
+});
 
 export const SearchArtistModel = z.object({
   total: z.number(),
@@ -31,7 +31,7 @@ export const SearchArtistModel = z.object({
       role: z.string(),
       type: z.string(),
       image: z.array(DownloadLinkModel),
-      url: z.string()
+      url: z.string(),
     })
-  )
-})
+  ),
+});

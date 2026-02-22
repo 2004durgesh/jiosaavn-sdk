@@ -1,5 +1,5 @@
-import { DownloadLinkModel } from '#common/models'
-import { z } from 'zod'
+import { DownloadLinkModel } from '#common/models';
+import { z } from 'zod';
 
 export const SearchPlaylistAPIResponseModel = z.object({
   total: z.number(),
@@ -24,14 +24,14 @@ export const SearchPlaylistAPIResponseModel = z.object({
         images: z.any(),
         lastname: z.string(),
         song_count: z.string(),
-        language: z.string()
+        language: z.string(),
       }),
       explicit_content: z.string(),
       mini_obj: z.boolean(),
-      numsongs: z.any()
+      numsongs: z.any(),
     })
-  )
-})
+  ),
+});
 
 export const SearchPlaylistModel = z.object({
   total: z.number(),
@@ -46,7 +46,7 @@ export const SearchPlaylistModel = z.object({
       url: z.string(),
       songCount: z.number().nullable(),
       language: z.string(),
-      explicitContent: z.boolean()
+      explicitContent: z.boolean(),
     })
-  )
-})
+  ),
+});

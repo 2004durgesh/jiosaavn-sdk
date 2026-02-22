@@ -1,4 +1,4 @@
 export interface DownloadLink {
-  quality: string
-  url: string
+  quality: string;
+  url: string;
 }

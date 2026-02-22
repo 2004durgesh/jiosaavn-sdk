@@ -1,16 +1,16 @@
-import { Endpoints } from '#common/constants'
-import { useFetch } from '#common/helpers'
-import { createSongPayload } from '#modules/songs/helpers'
-import { SaavnError } from '#common/errors'
-import type { IUseCase } from '#common/types'
-import type { ArtistSongAPIResponseModel, ArtistSongModel } from '#modules/artists/models'
-import type { z } from 'zod'
+import { Endpoints } from '#common/constants';
+import { useFetch } from '#common/helpers';
+import { createSongPayload } from '#modules/songs/helpers';
+import { SaavnError } from '#common/errors';
+import type { IUseCase } from '#common/types';
+import type { ArtistSongAPIResponseModel, ArtistSongModel } from '#modules/artists/models';
+import type { z } from 'zod';
 
 export interface GetArtistSongsArgs {
-  artistId: string
-  page: number
-  sortBy: 'popularity' | 'latest' | 'alphabetical'
-  sortOrder: 'asc' | 'desc'
+  artistId: string;
+  page: number;
+  sortBy: 'popularity' | 'latest' | 'alphabetical';
+  sortOrder: 'asc' | 'desc';
 }
 
 export class GetArtistSongsUseCase implements IUseCase<GetArtistSongsArgs, z.infer<typeof ArtistSongModel>> {
@@ -23,15 +23,15 @@ export class GetArtistSongsUseCase implements IUseCase<GetArtistSongsArgs, z.inf
         artistId,
         page,
         sort_order: sortOrder,
-        category: sortBy
-      }
-    })
+        category: sortBy,
+      },
+    });
 
-    if (!data) throw new SaavnError(404, 'artist songs not found')
+    if (!data) throw new SaavnError(404, 'artist songs not found');
 
     return {
       total: data.topSongs.total,
-      songs: data.topSongs.songs.map((song) => createSongPayload(song))
-    }
+      songs: data.topSongs.songs.map((song) => createSongPayload(song)),
+    };
   }
 }

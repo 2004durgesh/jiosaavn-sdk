@@ -1,0 +1,305 @@
+---
+title: Discover
+description: Browse trending content — top artists, featured playlists, new releases, and charts.
+---
+
+import { TypeTable } from 'fumadocs-ui/components/type-table';
+
+## DiscoverService
+
+```ts
+import { DiscoverService } from 'jiosaavn-sdk'
+
+const discoverService = new DiscoverService()
+```
+
+---
+
+### getTopArtists
+
+Fetch the most popular artists on JioSaavn.
+
+```ts
+const artists = await discoverService.getTopArtists()
+```
+
+#### Parameters
+
+None.
+
+#### Return Type — TopArtistModel[]
+
+<TypeTable
+  type={{
+    id: {
+      description: 'Artist ID',
+      type: 'string',
+      required: true,
+    },
+    name: {
+      description: 'Artist name',
+      type: 'string',
+      required: true,
+    },
+    image: {
+      description: 'Artist image URL',
+      type: 'string',
+      required: true,
+    },
+    followerCount: {
+      description: 'Number of followers',
+      type: 'number',
+      required: true,
+    },
+    isFollowed: {
+      description: 'Whether the current user follows this artist',
+      type: 'boolean',
+      required: true,
+    },
+    url: {
+      description: 'JioSaavn permalink',
+      type: 'string',
+      required: true,
+    },
+  }}
+/>
+
+---
+
+### getFeaturedPlaylists
+
+Fetch editorially curated playlists. Supports pagination.
+
+```ts
+const playlists = await discoverService.getFeaturedPlaylists({
+  page: 1,
+  limit: 10
+})
+```
+
+#### Parameters
+
+<TypeTable
+  type={{
+    page: {
+      description: 'Page number (default: 1)',
+      type: 'number',
+      required: false,
+    },
+    limit: {
+      description: 'Max results per page (default: 50)',
+      type: 'number',
+      required: false,
+    },
+  }}
+/>
+
+#### Return Type — FeaturedPlaylistModel[]
+
+<TypeTable
+  type={{
+    id: {
+      description: 'Playlist ID',
+      type: 'string',
+      required: true,
+    },
+    name: {
+      description: 'Playlist name',
+      type: 'string',
+      required: true,
+    },
+    subtitle: {
+      description: 'Subtitle (e.g. follower count text)',
+      type: 'string',
+      required: true,
+    },
+    type: {
+      description: 'Content type',
+      type: 'string',
+      required: true,
+    },
+    image: {
+      description: 'Cover image URL',
+      type: 'string',
+      required: true,
+    },
+    url: {
+      description: 'JioSaavn permalink',
+      type: 'string',
+      required: true,
+    },
+    songCount: {
+      description: 'Number of songs in the playlist',
+      type: 'number | null',
+      required: true,
+    },
+    followerCount: {
+      description: 'Number of followers',
+      type: 'number | null',
+      required: true,
+    },
+    lastUpdated: {
+      description: 'Unix timestamp of last update',
+      type: 'string | null',
+      required: true,
+    },
+    explicitContent: {
+      description: 'Whether the playlist has explicit content',
+      type: 'boolean',
+      required: true,
+    },
+  }}
+/>
+
+---
+
+### getNewReleases
+
+Fetch the latest album and song releases. Supports pagination.
+
+```ts
+const releases = await discoverService.getNewReleases({
+  page: 1,
+  limit: 20
+})
+```
+
+#### Parameters
+
+<TypeTable
+  type={{
+    page: {
+      description: 'Page number (default: 1)',
+      type: 'number',
+      required: false,
+    },
+    limit: {
+      description: 'Max results per page (default: 50)',
+      type: 'number',
+      required: false,
+    },
+  }}
+/>
+
+#### Return Type — NewRelease[]
+
+<TypeTable
+  type={{
+    id: {
+      description: 'Release ID',
+      type: 'string',
+      required: true,
+    },
+    name: {
+      description: 'Release title',
+      type: 'string',
+      required: true,
+    },
+    subtitle: {
+      description: 'Subtitle text',
+      type: 'string',
+      required: true,
+    },
+    type: {
+      description: 'Content type — "song" or "album"',
+      type: 'string',
+      required: true,
+    },
+    url: {
+      description: 'JioSaavn permalink',
+      type: 'string',
+      required: true,
+    },
+    image: {
+      description: 'Cover image URL',
+      type: 'string',
+      required: true,
+    },
+    language: {
+      description: 'Release language',
+      type: 'string',
+      required: true,
+    },
+    year: {
+      description: 'Release year',
+      type: 'string | null',
+      required: true,
+    },
+    playCount: {
+      description: 'Total play count (songs only)',
+      type: 'number | null',
+      required: true,
+    },
+    explicitContent: {
+      description: 'Whether the release has explicit content',
+      type: 'boolean',
+      required: true,
+    },
+  }}
+/>
+
+---
+
+### getCharts
+
+Fetch all available charts (e.g. India Superhits Top 50, Trending Today).
+
+```ts
+const charts = await discoverService.getCharts()
+```
+
+#### Parameters
+
+None.
+
+#### Return Type — ChartModel[]
+
+<TypeTable
+  type={{
+    id: {
+      description: 'Chart ID',
+      type: 'string',
+      required: true,
+    },
+    name: {
+      description: 'Chart name',
+      type: 'string',
+      required: true,
+    },
+    subtitle: {
+      description: 'Subtitle text',
+      type: 'string | null',
+      required: true,
+    },
+    type: {
+      description: 'Content type',
+      type: 'string',
+      required: true,
+    },
+    image: {
+      description: 'Chart cover image URL',
+      type: 'string',
+      required: true,
+    },
+    url: {
+      description: 'JioSaavn permalink',
+      type: 'string',
+      required: true,
+    },
+    language: {
+      description: 'Chart language',
+      type: 'string | null',
+      required: true,
+    },
+    songCount: {
+      description: 'Number of songs in the chart',
+      type: 'number | null',
+      required: true,
+    },
+    explicitContent: {
+      description: 'Whether the chart has explicit content',
+      type: 'boolean',
+      required: true,
+    },
+  }}
+/>
