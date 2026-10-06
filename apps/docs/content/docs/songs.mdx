@@ -101,6 +101,36 @@ const suggestions = await songService.getSongSuggestions({
 
 ---
 
+### getLyrics
+
+Fetch a song's lyrics as plain text (line breaks as `\n`).
+
+```ts
+const [song] = await songService.getSongByIds({ songIds: 'aRZbUYD7' })
+
+if (song.hasLyrics && song.lyricsId) {
+  const { lyrics, copyright } = await songService.getLyrics(song.lyricsId)
+}
+```
+
+#### Parameters
+
+<TypeTable
+  type={{
+    songId: {
+      description: 'The song ID (or `SongModel.lyricsId`, which falls back to it)',
+      type: 'string',
+      required: true,
+    },
+  }}
+/>
+
+**Returns:** `Promise<SongLyricsModel>`
+
+**Throws:** `SaavnError(404)` if the song has no lyrics.
+
+---
+
 ### createSongStation
 
 Create a radio station from a song ID.
@@ -187,7 +217,7 @@ const stationId = await songService.createSongStation('3IoDK8qI')
       required: true,
     },
     lyricsId: {
-      description: 'ID for fetching lyrics',
+      description: 'ID to pass to `getLyrics` — the song ID when JioSaavn sends no separate lyrics ID; null without lyrics',
       type: 'string | null',
       required: true,
     },
@@ -219,6 +249,30 @@ const stationId = await songService.createSongStation('3IoDK8qI')
     downloadUrl: {
       description: 'Audio download URLs at various bitrates',
       type: 'DownloadLink[]',
+      required: true,
+    },
+  }}
+/>
+
+---
+
+## SongLyricsModel
+
+<TypeTable
+  type={{
+    lyrics: {
+      description: 'Full lyrics, lines separated by `\\n`',
+      type: 'string',
+      required: true,
+    },
+    copyright: {
+      description: 'Lyrics copyright / attribution line',
+      type: 'string | null',
+      required: true,
+    },
+    snippet: {
+      description: 'Short excerpt of the lyrics',
+      type: 'string | null',
       required: true,
     },
   }}

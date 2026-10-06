@@ -1,4 +1,4 @@
-import { createImageLinks } from '#common/helpers';
+import { createImageLinks, decodeEntities, parseJsonField } from '#common/helpers';
 import { createAlbumPayload } from '#modules/albums/helpers';
 import { createSongPayload } from '#modules/songs/helpers';
 import type {
@@ -8,6 +8,12 @@ import type {
   ArtistModel,
 } from '#modules/artists/models';
 import type { z } from 'zod';
+
+type ArtistBio = z.infer<typeof ArtistModel>['bio'];
+
+// The bio is usually a JSON array of sections, but some artists have plain text instead.
+const parseBio = (bio: string): ArtistBio =>
+  parseJsonField<ArtistBio>(bio, [{ text: decodeEntities(bio), title: null, sequence: null }]);
 
 export const createArtistPayload = (artist: z.infer<typeof ArtistAPIResponseModel>): z.infer<typeof ArtistModel> => ({
   id: artist.artistId || artist.id,
@@ -19,7 +25,7 @@ export const createArtistPayload = (artist: z.infer<typeof ArtistAPIResponseMode
   isVerified: artist.isVerified || null,
   dominantLanguage: artist.dominantLanguage || null,
   dominantType: artist.dominantType || null,
-  bio: artist.bio ? JSON.parse(artist.bio) : null,
+  bio: artist.bio ? parseBio(artist.bio) : null,
   dob: artist.dob || null,
   fb: artist.fb || null,
   twitter: artist.twitter || null,
@@ -36,7 +42,7 @@ export const createArtistPayload = (artist: z.infer<typeof ArtistAPIResponseMode
       name: similarArtist.name,
       url: similarArtist.perma_url,
       image: createImageLinks(similarArtist.image_url),
-      languages: similarArtist.languages ? JSON.parse(similarArtist.languages) : null,
+      languages: similarArtist.languages ? parseJsonField(similarArtist.languages, null) : null,
       wiki: similarArtist.wiki,
       dob: similarArtist.dob,
       fb: similarArtist.fb,
@@ -45,8 +51,9 @@ export const createArtistPayload = (artist: z.infer<typeof ArtistAPIResponseMode
       type: similarArtist.type,
       dominantType: similarArtist.dominantType,
       aka: similarArtist.aka,
-      bio: similarArtist.bio ? JSON.parse(similarArtist.bio) : null,
-      similarArtists: similarArtist.similar ? JSON.parse(similarArtist.similar) : null,
+      // Plain text (not JSON like the artist's own bio), as SimilarArtist.bio is typed.
+      bio: similarArtist.bio ? decodeEntities(similarArtist.bio) : null,
+      similarArtists: similarArtist.similar ? parseJsonField(similarArtist.similar, null) : null,
     })) || null,
 });
 

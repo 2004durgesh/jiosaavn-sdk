@@ -1,6 +1,7 @@
 import { Endpoints } from '#common/constants';
 import { useFetch } from '#common/helpers';
 import { createSearchAlbumPayload } from '#modules/search/helpers';
+import { SaavnError } from '#common/errors';
 import type { IUseCase } from '#common/types';
 import type { SearchAlbumAPIResponseModel, SearchAlbumModel } from '#modules/search/models';
 import type { z } from 'zod';
@@ -23,6 +24,8 @@ export class SearchAlbumsUseCase implements IUseCase<SearchAlbumsArgs, z.infer<t
         n: limit,
       },
     });
+
+    if (!data) throw new SaavnError(404, 'album not found');
 
     return createSearchAlbumPayload(data);
   }

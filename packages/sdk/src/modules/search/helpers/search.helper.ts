@@ -12,7 +12,7 @@ import type { z } from 'zod';
 
 export const createSearchPayload = (search: z.infer<typeof SearchAPIResponseModel>): z.infer<typeof SearchModel> => ({
   topQuery: {
-    results: search?.topquery?.data.map((item) => {
+    results: (search?.topquery?.data ?? []).map((item) => {
       return {
         id: item?.id,
         title: item?.title,
@@ -30,12 +30,12 @@ export const createSearchPayload = (search: z.infer<typeof SearchAPIResponseMode
   },
 
   songs: {
-    results: search?.songs?.data.map((song) => {
+    results: (search?.songs?.data ?? []).map((song) => {
       return {
         id: song?.id,
         title: song?.title,
         image: createImageLinks(song?.image),
-        album: song?.more_info.album,
+        album: song?.more_info?.album,
         url: song?.perma_url,
         type: song?.type,
         description: song?.description,
@@ -44,16 +44,16 @@ export const createSearchPayload = (search: z.infer<typeof SearchAPIResponseMode
         language: song?.more_info?.language,
       };
     }),
-    position: search.songs.position,
+    position: search?.songs?.position,
   },
 
   albums: {
-    results: search?.albums?.data.map((album) => {
+    results: (search?.albums?.data ?? []).map((album) => {
       return {
         id: album?.id,
         title: album?.title,
         image: createImageLinks(album.image),
-        artist: album?.more_info.music,
+        artist: album?.more_info?.music,
         url: album?.perma_url,
         type: album?.type,
         description: album?.description,
@@ -66,7 +66,7 @@ export const createSearchPayload = (search: z.infer<typeof SearchAPIResponseMode
   },
 
   artists: {
-    results: search?.artists?.data.map((artist) => {
+    results: (search?.artists?.data ?? []).map((artist) => {
       return {
         id: artist?.id,
         title: artist?.title,
@@ -80,7 +80,7 @@ export const createSearchPayload = (search: z.infer<typeof SearchAPIResponseMode
   },
 
   playlists: {
-    results: search?.playlists?.data.map((playlist) => {
+    results: (search?.playlists?.data ?? []).map((playlist) => {
       return {
         id: playlist?.id,
         title: playlist?.title,
@@ -100,14 +100,14 @@ export const createSearchPlaylistPayload = (
 ): z.infer<typeof SearchPlaylistModel> => ({
   total: Number(playlist.total),
   start: Number(playlist.start),
-  results: playlist.results.map((item) => ({
+  results: (playlist.results ?? []).map((item) => ({
     id: item.id,
     name: item.title,
     type: item.type,
     image: createImageLinks(item.image),
     url: item.perma_url,
-    songCount: item.more_info.song_count ? Number(item.more_info.song_count) : null,
-    language: item.more_info.language,
+    songCount: item.more_info?.song_count ? Number(item.more_info.song_count) : null,
+    language: item.more_info?.language,
     explicitContent: item.explicit_content === '1',
   })),
 });
@@ -117,7 +117,7 @@ export const createSearchAlbumPayload = (
 ): z.infer<typeof SearchAlbumModel> => ({
   total: Number(album.total),
   start: Number(album.start),
-  results: album.results.map((item) => ({
+  results: (album.results ?? []).map((item) => ({
     id: item.id,
     name: item.title,
     description: item.header_desc,
@@ -128,9 +128,9 @@ export const createSearchAlbumPayload = (
     language: item.language,
     explicitContent: item.explicit_content === '1',
     artists: {
-      primary: item.more_info?.artistMap?.primary_artists?.map(createArtistMapPayload),
-      featured: item.more_info?.artistMap?.featured_artists?.map(createArtistMapPayload),
-      all: item.more_info?.artistMap?.artists?.map(createArtistMapPayload),
+      primary: item.more_info?.artistMap?.primary_artists?.map(createArtistMapPayload) ?? [],
+      featured: item.more_info?.artistMap?.featured_artists?.map(createArtistMapPayload) ?? [],
+      all: item.more_info?.artistMap?.artists?.map(createArtistMapPayload) ?? [],
     },
     image: createImageLinks(item.image),
   })),

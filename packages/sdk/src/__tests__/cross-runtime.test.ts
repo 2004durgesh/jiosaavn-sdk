@@ -29,12 +29,17 @@ describe('Cross-Runtime Compatibility', () => {
     })
   })
 
-  describe('Crypto (node-forge)', () => {
-    it('should decrypt media URLs using DES-ECB via node-forge', () => {
-      // Test with a known encrypted URL from JioSaavn
-      // This verifies node-forge works in the current runtime
-      const links = createDownloadLinks('') // empty string should return empty array
-      expect(links).toEqual([])
+  describe('Crypto (built-in DES)', () => {
+    it('should decrypt media URLs using DES-ECB in the current runtime', () => {
+      // A real encrypted_media_url (Levitating); no Node/browser crypto APIs involved
+      const links = createDownloadLinks(
+        'ID2ieOjCrwfgWvL5sXl4B1ImC5QfbsDylsUbBKiBMWa4cKhEF4Xz5p975Hh3jSc+rXO0khV0lO1tzxLIEtHbjhw7tS9a8Gtq'
+      )
+      expect(links[2]).toEqual({
+        quality: '96kbps',
+        url: 'https://aac.saavncdn.com/665/7790c3b9097592113008eaf1031d6e57_96.mp4',
+      })
+      expect(createDownloadLinks('')).toEqual([])
     })
 
     it('should create image links from a base URL', () => {

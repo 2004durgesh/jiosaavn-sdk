@@ -17,7 +17,7 @@ export const createPlaylistPayload = (
   explicitContent: playlist.explicit_content === '1',
   url: playlist.perma_url,
   songCount: playlist.list_count ? Number(playlist.list_count) : null,
-  artists: playlist.more_info.artists?.map(createArtistMapPayload) || null,
+  artists: playlist.more_info?.artists?.map(createArtistMapPayload) || null,
   image: createImageLinks(playlist.image),
   songs: (playlist.list && playlist.list?.map(createSongPayload)) || null,
 });

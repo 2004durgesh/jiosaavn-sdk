@@ -21,4 +21,19 @@ describe('GetArtistById', () => {
 
     expect(() => ArtistModel.parse(artist)).not.toThrow();
   });
+
+  // Irshad Kamil: a similar artist (Javed Akhtar) has a plain-text bio, which used to throw in JSON.parse.
+  it('should get an artist whose similar artists have plain-text bios', async () => {
+    const artist = await getArtistByIdUseCase.execute({
+      artistId: '456259',
+      page: 1,
+      songCount: 5,
+      albumCount: 5,
+      sortBy: 'popularity',
+      sortOrder: 'desc',
+    });
+
+    expect(() => ArtistModel.parse(artist)).not.toThrow();
+    expect(artist.similarArtists?.some((similar) => similar.bio && !similar.bio.startsWith('['))).toBe(true);
+  });
 });

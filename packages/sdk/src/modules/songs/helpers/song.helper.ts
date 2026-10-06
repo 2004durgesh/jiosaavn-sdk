@@ -1,6 +1,11 @@
 import { createDownloadLinks, createImageLinks } from '#common/helpers';
 import { createArtistMapPayload } from '#modules/artists/helpers';
-import type { SongAPIResponseModel, SongModel } from '#modules/songs/models';
+import type {
+  SongAPIResponseModel,
+  SongLyricsAPIResponseModel,
+  SongLyricsModel,
+  SongModel,
+} from '#modules/songs/models';
 import type { z } from 'zod';
 
 export const createSongPayload = (song: z.infer<typeof SongAPIResponseModel>): z.infer<typeof SongModel> => ({
@@ -15,7 +20,8 @@ export const createSongPayload = (song: z.infer<typeof SongAPIResponseModel>): z
   playCount: song.play_count ? Number(song.play_count) : null,
   language: song.language,
   hasLyrics: song.more_info?.has_lyrics === 'true',
-  lyricsId: song.more_info?.lyrics_id || null,
+  // `lyrics_id` is usually empty even when lyrics exist; the lyrics endpoint takes the song id.
+  lyricsId: song.more_info?.lyrics_id || (song.more_info?.has_lyrics === 'true' ? song.id : null),
   url: song.perma_url,
   copyright: song.more_info?.copyright_text || null,
   album: {
@@ -24,10 +30,18 @@ export const createSongPayload = (song: z.infer<typeof SongAPIResponseModel>): z
     url: song.more_info?.album_url || null,
   },
   artists: {
-    primary: song.more_info?.artistMap?.primary_artists?.map(createArtistMapPayload),
-    featured: song.more_info?.artistMap?.featured_artists?.map(createArtistMapPayload),
-    all: song.more_info?.artistMap?.artists?.map(createArtistMapPayload),
+    primary: song.more_info?.artistMap?.primary_artists?.map(createArtistMapPayload) ?? [],
+    featured: song.more_info?.artistMap?.featured_artists?.map(createArtistMapPayload) ?? [],
+    all: song.more_info?.artistMap?.artists?.map(createArtistMapPayload) ?? [],
   },
   image: createImageLinks(song.image),
   downloadUrl: createDownloadLinks(song.more_info?.encrypted_media_url),
+});
+
+export const createSongLyricsPayload = (
+  lyrics: z.infer<typeof SongLyricsAPIResponseModel>
+): z.infer<typeof SongLyricsModel> => ({
+  lyrics: lyrics.lyrics.replace(/<br\s*\/?>/gi, '\n').trim(),
+  copyright: lyrics.lyrics_copyright || null,
+  snippet: lyrics.snippet || null,
 });

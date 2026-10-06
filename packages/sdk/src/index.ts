@@ -18,5 +18,5 @@ export {
   ArtistMapAPIResponseModel,
 } from './modules/artists/models';
 export { TopArtistModel, FeaturedPlaylistModel, ChartModel, NewReleaseModel } from './modules/discover/models';
-export { SongModel, SongAPIResponseModel } from './modules/songs/models';
+export { SongModel, SongAPIResponseModel, SongLyricsModel } from './modules/songs/models';
 export type { DownloadLink } from './common/types';

@@ -1,4 +1,11 @@
-import crypto from 'node-forge';
+import { decryptDesEcb } from './des.helper';
+
+const MEDIA_URL_KEY = '38346591';
+// The bitrate suffix right before the extension: `…/abc_96.mp4`.
+const BITRATE_SUFFIX = /_(?:12|48|96|160|320)(?=\.\w+(?:\?|$))/;
+// The size right before the extension: `…-150x150.jpg` (any size, so a 500x500 source works too).
+const IMAGE_SIZE = /\d+x\d+(?=\.\w+(?:\?|$))/;
+const INSECURE_PROTOCOL = /^http:\/\//;
 
 export const createDownloadLinks = (encryptedMediaUrl: string) => {
   if (!encryptedMediaUrl) return [];
@@ -11,19 +18,11 @@ export const createDownloadLinks = (encryptedMediaUrl: string) => {
     { id: '_320', bitrate: '320kbps' },
   ];
 
-  const key = '38346591';
-  const iv = '00000000';
-
-  const encrypted = crypto.util.decode64(encryptedMediaUrl);
-  const decipher = crypto.cipher.createDecipher('DES-ECB', crypto.util.createBuffer(key));
-  decipher.start({ iv: crypto.util.createBuffer(iv) });
-  decipher.update(crypto.util.createBuffer(encrypted));
-  decipher.finish();
-  const decryptedLink = decipher.output.getBytes();
+  const decryptedLink = decryptDesEcb(encryptedMediaUrl, MEDIA_URL_KEY).replace(INSECURE_PROTOCOL, 'https://');
 
   return qualities.map((quality) => ({
     quality: quality.bitrate,
-    url: decryptedLink.replace('_96', quality.id),
+    url: decryptedLink.replace(BITRATE_SUFFIX, quality.id),
   }));
 };
 
@@ -31,11 +30,9 @@ export const createImageLinks = (link: string) => {
   if (!link) return [];
 
   const qualities = ['50x50', '150x150', '500x500'];
-  const qualityRegex = /150x150|50x50/;
-  const protocolRegex = /^http:\/\//;
 
   return qualities.map((quality) => ({
     quality,
-    url: link.replace(qualityRegex, quality).replace(protocolRegex, 'https://'),
+    url: link.replace(IMAGE_SIZE, quality).replace(INSECURE_PROTOCOL, 'https://'),
   }));
 };

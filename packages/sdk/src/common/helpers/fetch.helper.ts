@@ -1,5 +1,6 @@
 import { userAgents, type Endpoints } from '#common/constants';
 import type { ApiContextEnum } from '#common/enums';
+import { decodeResponseStrings } from './text.helper';
 
 type EndpointValue = (typeof Endpoints)[keyof typeof Endpoints];
 
@@ -31,7 +32,8 @@ export const useFetch = async <T>({ endpoint, params, context }: FetchParams): P
     headers: { 'Content-Type': 'application/json', 'User-Agent': randomUserAgent },
   });
 
-  const data = await response.json();
+  // Decode HTML entities once, here, so every endpoint returns clean text (`"` instead of `&quot;`).
+  const data = JSON.parse(await response.text(), decodeResponseStrings);
 
   return { data: data as T, ok: response.ok };
 };

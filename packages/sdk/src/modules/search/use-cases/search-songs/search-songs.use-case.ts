@@ -1,6 +1,7 @@
 import { Endpoints } from '#common/constants';
 import { useFetch } from '#common/helpers';
 import { createSongPayload } from '#modules/songs/helpers';
+import { SaavnError } from '#common/errors';
 import type { IUseCase } from '#common/types';
 import type { SearchSongAPIResponseModel, SearchSongModel } from '#modules/search/models';
 import type { z } from 'zod';
@@ -23,6 +24,8 @@ export class SearchSongsUseCase implements IUseCase<SearchSongsArgs, z.infer<typ
         n: limit,
       },
     });
+
+    if (!data) throw new SaavnError(404, 'song not found');
 
     return {
       total: data.total,
