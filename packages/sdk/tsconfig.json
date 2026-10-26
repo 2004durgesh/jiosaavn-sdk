@@ -44,7 +44,6 @@
     "moduleResolution": "bundler",
 
     // Path Aliases
-    "baseUrl": ".",
     "paths": {
       "#common/*": ["./src/common/*"],
       "#modules/*": ["./src/modules/*"]
