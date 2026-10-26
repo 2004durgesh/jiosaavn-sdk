@@ -42,7 +42,7 @@
   "license": "MIT",
   "type": "commonjs",
   "dependencies": {
-    "zod": "^3.24.0"
+    "zod": "^4.6.7"
   },
   "devDependencies": {
     "jsdom": "^26.0.0",

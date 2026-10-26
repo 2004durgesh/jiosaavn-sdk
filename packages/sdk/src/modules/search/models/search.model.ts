@@ -130,7 +130,7 @@ export const SearchAPIResponseModel = z.object({
   }),
 });
 
-const SearchResponseModel = <T>(model: z.ZodType<T, any, any>) =>
+const SearchResponseModel = <T extends z.ZodType>(model: T) =>
   z.object({
     results: model,
     position: z.number(),
