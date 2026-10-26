@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.1.1](https://github.com/2004durgesh/jiosaavn-sdk/compare/v1.1.0...v1.1.1) (2026-10-26)
+
+### Bug Fixes
+
+* update zod dependency to v4.6.7 and refine api response models ([16480d4](https://github.com/2004durgesh/jiosaavn-sdk/commit/16480d40013063f97bdfda72acc62ffbc02117d0))
+
 ## [1.1.0](https://github.com/2004durgesh/jiosaavn-sdk/compare/v1.0.0...v1.1.0) (2026-10-06)
 
 ### Features
